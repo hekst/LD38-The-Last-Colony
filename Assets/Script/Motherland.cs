@@ -17,7 +17,7 @@ public class Motherland : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CheckMomentum ();
+		//CheckMomentum ();
 	}
 
 	public bool AddResources (ResourceType r, float quantity) {
@@ -26,6 +26,10 @@ public class Motherland : MonoBehaviour {
 
 	public void AddForceToMotherland (Vector3 force) {
 		mlRigidbody.AddForce (force);
+	}
+
+	void OnCollisionEnter (Collision other) {
+		CheckMomentum ();
 	}
 
 	// If velocity above threshold, do something. Destroyed resources, people falling off the station..

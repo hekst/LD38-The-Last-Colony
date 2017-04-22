@@ -15,6 +15,8 @@ public class Ship : MonoBehaviour {
 
 	public Rigidbody shipRigidbody;
 
+	public float maxVelocityTolerated = 2.0f;
+
 	public KeyCode moveInwardKey = KeyCode.D;
 	public KeyCode moveOutwardKey = KeyCode.A;
 	public KeyCode toggleDockKey = KeyCode.F;
@@ -62,6 +64,24 @@ public class Ship : MonoBehaviour {
 		currentState.Update ();
 	}
 
+	//////////////////////
+	// Collision Impact //
+	//////////////////////
+	void OnCollisionEnter (Collision other) {
+		Debug.Log ("Ship " + shipName + " collided with " + other.transform.name);
+		//CheckMomentum ();
+		if (other.transform.CompareTag ("Motherland") 
+			&& other.relativeVelocity.magnitude > maxVelocityTolerated) {
+			Debug.Log ("THE IMPACT WAS INCREDIBLE! " + other.relativeVelocity.magnitude);
+			DamageCargo (other.relativeVelocity.magnitude);
+		}
+	}
+
+	void DamageCargo (float magnitude) {
+		// TODO Adjust the damage.
+		SetShipResourceQuantity (GetShipResourceQuantity () - magnitude);
+	}
+	//////////////////////
 
 	void InitializeStates () {
 		idleState = new IdleState (this);
@@ -150,6 +170,7 @@ public class Ship : MonoBehaviour {
 			q = 0;
 		}
 		resourceQuantity = q;
+		UIManager.manager.UpdateStationInfoQuantity (dockingStationId, this);
 	}
 
 	public void SailOutShip () {
@@ -178,7 +199,6 @@ public class Ship : MonoBehaviour {
 			// Unload only when motherland has space.
 			if (motherland.AddResources (resourceType, unloadRate)) {
 				SetShipResourceQuantity (quantity - unloadRate);
-				UIManager.manager.UpdateStationInfoQuantity (dockingStationId, this);
 				StartCoroutine (UnloadEverySecond ());
 			}
 
