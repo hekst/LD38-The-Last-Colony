@@ -8,23 +8,93 @@ public class ObjectiveManager : MonoBehaviour {
 
 	public List<Ship> listAvailableShips;
 
+	public Dictionary<ResourceType, float> deliveryFrequencyBase;
+	public Dictionary<ResourceType, float> deliveryFrequencyRange;
+
 	void Awake () {
 		if (manager == null) {
 			manager = this;
 		} else {
 			Destroy (gameObject);
 		}
+		InitializeDeliveryFrequency ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine (TestSailOut ());
+		StartCoroutine (TryToDeliverFoodAndWater ());
+		StartCoroutine (TryToDeliverOxygen ());
+		StartCoroutine (TryToDeliverPeople ());
+
 	}
 
 	IEnumerator TestSailOut () {
 		yield return new WaitForSeconds (2.0f);
 		SetOutOxygenShip ();
 	}
+	//////////////////////////
+	// Objective Scheduler ///
+	//////////////////////////
+	IEnumerator TryToDeliverFoodAndWater () {
+		yield return new WaitForSeconds (GetDeliveryFrequency (ResourceType.FoodAndWater));
+		Debug.Log ("ObjectiveManager:TryToDeliverFoodAndWater Objective Manager attempting to send out cargo.");
+		SetOutFoodAndWaterShip ();
+
+		StartCoroutine (TryToDeliverFoodAndWater ());
+	}
+
+	IEnumerator TryToDeliverOxygen () {
+		yield return new WaitForSeconds (GetDeliveryFrequency (ResourceType.Oxygen));
+		Debug.Log ("ObjectiveManager:TryToDeliverOxygen Objective Manager attempting to send out cargo.");
+		SetOutOxygenShip ();
+
+		StartCoroutine (TryToDeliverOxygen ());
+	}
+
+
+	IEnumerator TryToDeliverPeople () {
+		yield return new WaitForSeconds (GetDeliveryFrequency (ResourceType.People));
+		Debug.Log ("ObjectiveManager:TryToDeliverPeople Objective Manager attempting to send out cargo.");
+		SetOutPeopleShip ();
+
+		StartCoroutine (TryToDeliverPeople ());
+	}
+
+
+	// TODO Maybe move this to ResourceTypeMethod. Probably should.
+	void InitializeDeliveryFrequency () {
+		deliveryFrequencyBase = new Dictionary<ResourceType, float> ();
+		deliveryFrequencyBase.Add (ResourceType.FoodAndWater, 	5.0f);
+		deliveryFrequencyBase.Add (ResourceType.Oxygen, 		5.0f);
+		deliveryFrequencyBase.Add (ResourceType.People, 		5.0f);
+
+		deliveryFrequencyRange = new Dictionary<ResourceType, float> ();
+		deliveryFrequencyRange.Add (ResourceType.FoodAndWater, 	2.0f);
+		deliveryFrequencyRange.Add (ResourceType.Oxygen, 		2.0f);
+		deliveryFrequencyRange.Add (ResourceType.People, 		2.0f);
+	}
+
+	// Assign resource quantity
+	float AssignNumFoodAndWater () {
+		return Random.Range (15.0f, 25.0f);
+	}
+
+	float AssignNumOxygen () {
+		return Random.Range (10.0f, 15.0f);
+	}
+
+	float AssignNumPeople () {
+		return Random.Range (30.0f, 50.0f);
+	}
+		
+	float GetDeliveryFrequency (ResourceType r) {
+		return Random.Range (
+			deliveryFrequencyBase[r] - deliveryFrequencyRange[r],
+			deliveryFrequencyBase[r] + deliveryFrequencyRange[r]
+		);
+	}
+
+	//////////////////////////
 
 	public void AddAvailableShip (Ship ship) {
 		listAvailableShips.Add (ship);
@@ -34,6 +104,18 @@ public class ObjectiveManager : MonoBehaviour {
 		SetupShipAndSailItOut (
 			ResourceType.Oxygen,
 			AssignNumOxygen ()
+		);
+	}
+	void SetOutFoodAndWaterShip () {
+		SetupShipAndSailItOut (
+			ResourceType.FoodAndWater,
+			AssignNumFoodAndWater ()
+		);
+	}
+	void SetOutPeopleShip () {
+		SetupShipAndSailItOut (
+			ResourceType.People,
+			AssignNumPeople ()
 		);
 	}
 
@@ -71,17 +153,5 @@ public class ObjectiveManager : MonoBehaviour {
 		return "Albatross";
 	}
 
-	// Assign resource quantity
-	float AssignNumFoodAndWater () {
-		return Random.Range (15.0f, 25.0f);
-	}
-
-	float AssignNumOxygen () {
-		return Random.Range (10.0f, 15.0f);
-	}
-
-	float AssignNumPeople () {
-		return Random.Range (30.0f, 50.0f);
-	}
 
 }
