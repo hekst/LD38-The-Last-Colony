@@ -160,6 +160,7 @@ public class Ship : MonoBehaviour {
 		float unloadRate = GetShipResourceType ().GetUnloadRatePerSec ();
 		if ((quantity > 0) && (docked == true)) {
 			SetShipResourceQuantity (quantity - unloadRate);
+			motherland.AddResources (resourceType, unloadRate);
 			StartCoroutine (UnloadEverySecond ());
 		} else {
 			Debug.Log (shipName + " either finished unloading or undocked while unloading. Remaining resource amount: " + resourceQuantity);

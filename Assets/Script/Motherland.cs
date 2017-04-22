@@ -7,7 +7,6 @@ public class Motherland : MonoBehaviour {
 	Rigidbody mlRigidbody;
 	MotherlandResources resources;
 
-
 	public float maxVelocityTolerated = 1.0f;
 
 	// Use this for initialization
@@ -21,6 +20,10 @@ public class Motherland : MonoBehaviour {
 		CheckMomentum ();
 	}
 
+	public void AddResources (ResourceType r, float quantity) {
+		resources.AddToResources (r, quantity);
+	}
+
 	public void AddForceToMotherland (Vector3 force) {
 		mlRigidbody.AddForce (force);
 	}
@@ -31,7 +34,6 @@ public class Motherland : MonoBehaviour {
 			Debug.Log ("[Motherland:IsMomentumAboveThreshold] Threshold Crossed!! " + mlRigidbody.velocity);
 		}
 	}
-
 
 	bool IsMomentumAboveThreshold () {
 		if (mlRigidbody.velocity.x > maxVelocityTolerated

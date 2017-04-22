@@ -18,12 +18,29 @@ public class MotherlandResources : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InitializeResources (80, 25, 50);
+		InitializeResources (35, 25, 50);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void AddToResources (ResourceType resource, float delta) {
+		switch (resource) {
+		case ResourceType.FoodAndWater:
+			UpdateFoodAndWater (foodAndWater + delta);
+			break;
+		case ResourceType.Oxygen:
+			UpdateOxygen (oxygen + delta);
+			break;
+		case ResourceType.People:
+			UpdatePopulation (population + delta);
+			break;
+		default:
+			Debug.LogError ("MotherlandResources:AddToResources Unknow resource type passed in!! " + resource.ToString ());
+			break;
+		}
 	}
 
 	public void UpdateFoodAndWater (float food) {
