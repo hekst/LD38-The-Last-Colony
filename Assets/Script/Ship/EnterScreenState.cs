@@ -19,6 +19,8 @@ public class EnterScreenState : IShipState {
 		}
 		stepSize = MoveUtil.CalculateStepSize (50, ship.transform.position, ship.startPos, "");
 		UIManager.manager.SetupStationInfo (this.ship.dockingStationId, this.ship);
+		base.ship.invisibleGate.SetActive (false);
+
 	}
 
 	public override void ExitState ()

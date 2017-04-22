@@ -30,6 +30,7 @@ public class Ship : MonoBehaviour {
 
 	public Motherland motherland;
 	public DockingProbe dockingProbe;
+	public GameObject invisibleGate;
 
 	public int dockingStationId;
 	public Vector3 startPos;

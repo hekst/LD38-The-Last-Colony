@@ -11,8 +11,12 @@ public class UndockedState : IShipState {
 	public override void EnterState ()
 	{
 		UIManager.manager.SetupStationStatus (base.ship.dockingStationId, base.ship.awaitingDockingStatusMsg);
+		base.ship.invisibleGate.SetActive (true);
 	}
-
+	public override void ExitState ()
+	{
+		base.ship.invisibleGate.SetActive (false);
+	}
 	public override void Update ()
 	{
 		UpdateShipMovement ();
