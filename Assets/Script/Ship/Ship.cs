@@ -175,10 +175,13 @@ public class Ship : MonoBehaviour {
 		float quantity = GetShipResourceQuantity ();
 		float unloadRate = GetShipResourceType ().GetUnloadRatePerSec ();
 		if ((quantity > 0) && (docked == true)) {
-			SetShipResourceQuantity (quantity - unloadRate);
-			motherland.AddResources (resourceType, unloadRate);
-			UIManager.manager.UpdateStationInfoQuantity (dockingStationId, this);
-			StartCoroutine (UnloadEverySecond ());
+			// Unload only when motherland has space.
+			if (motherland.AddResources (resourceType, unloadRate)) {
+				SetShipResourceQuantity (quantity - unloadRate);
+				UIManager.manager.UpdateStationInfoQuantity (dockingStationId, this);
+				StartCoroutine (UnloadEverySecond ());
+			}
+
 		} else if (quantity <= 0) {
 			Debug.Log (shipName + " finished unloading.");
 			UIManager.manager.SetupStationStatus (dockingStationId, dockedAndFinishedUnloadingStatusMsg);

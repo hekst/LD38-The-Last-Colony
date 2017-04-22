@@ -20,8 +20,8 @@ public class Motherland : MonoBehaviour {
 		CheckMomentum ();
 	}
 
-	public void AddResources (ResourceType r, float quantity) {
-		resources.AddToResources (r, quantity);
+	public bool AddResources (ResourceType r, float quantity) {
+		return resources.AddToResources (r, quantity);
 	}
 
 	public void AddForceToMotherland (Vector3 force) {

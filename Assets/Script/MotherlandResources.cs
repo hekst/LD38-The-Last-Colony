@@ -26,27 +26,32 @@ public class MotherlandResources : MonoBehaviour {
 		
 	}
 
-	public void AddToResources (ResourceType resource, float delta) {
+	// Return false if resources are at maximum capacity
+	public bool AddToResources (ResourceType resource, float delta) {
+		bool success = false;
 		switch (resource) {
 		case ResourceType.FoodAndWater:
-			UpdateFoodAndWater (foodAndWater + delta);
+			success = UpdateFoodAndWater (foodAndWater + delta);
 			break;
 		case ResourceType.Oxygen:
-			UpdateOxygen (oxygen + delta);
+			success = UpdateOxygen (oxygen + delta);
 			break;
 		case ResourceType.People:
-			UpdatePopulation (population + delta);
+			success = UpdatePopulation (population + delta);
 			break;
 		default:
 			Debug.LogError ("MotherlandResources:AddToResources Unknow resource type passed in!! " + resource.ToString ());
+			success = false;
 			break;
 		}
+		return success;
 	}
 
-	public void UpdateFoodAndWater (float food) {
+	public bool UpdateFoodAndWater (float food) {
 		// Update value
 		if (food > foodAndWaterCapacity) {
 			food = foodAndWaterCapacity;
+			return false;
 		} else if (food < 0) {
 			food = 0;
 		}
@@ -54,12 +59,14 @@ public class MotherlandResources : MonoBehaviour {
 
 		// Update UI
 		foodAndWaterMeter.UpdateValueBar (this.foodAndWater);
+		return true;
 	}
 
-	public void UpdateOxygen (float ox) {
+	public bool UpdateOxygen (float ox) {
 		// Update value
 		if (ox > oxygenCapacity) {
 			ox = oxygenCapacity;
+			return false;
 		} else if (ox < 0) {
 			ox = 0;
 		}
@@ -67,12 +74,14 @@ public class MotherlandResources : MonoBehaviour {
 
 		// Update UI
 		oxygenMeter.UpdateValueBar (this.oxygen);
+		return true;
 	}
 
-	public void UpdatePopulation (float pop) {
+	public bool UpdatePopulation (float pop) {
 		// Update value
 		if (pop > populationCapacity) {
 			pop = populationCapacity;
+			return false;
 		} else if (pop < 0) {
 			pop = 0;
 		}
@@ -80,6 +89,7 @@ public class MotherlandResources : MonoBehaviour {
 
 		// Update UI
 		populationMeter.UpdateValueBar (this.population);
+		return true;
 	}
 
 	void InitializeResources (float fw, float ox, float pop) {
