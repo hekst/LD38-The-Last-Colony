@@ -26,7 +26,7 @@ public class ResourceMeter : MonoBehaviour {
 		Debug.Log ("ResourceMeter value max height: " + valueBarMaxHeight);
 	}
 
-	void UpdateValueBar (float newPercent) {
+	public void UpdateValueBar (float newPercent) {
 		if (newPercent > 100) {
 			newPercent = 100;
 		} else if (newPercent < 0) {
