@@ -49,6 +49,7 @@ public class ObjectiveManager : MonoBehaviour {
 		ship.SetShipResourceType (resource);
 		ship.SetShipResourceQuantity (resourceQuantity);
 
+
 		// Sail it out
 		ship.SailOutShip ();
 	}

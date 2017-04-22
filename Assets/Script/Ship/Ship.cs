@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ship : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class Ship : MonoBehaviour {
 	public KeyCode moveOutwardKey = KeyCode.A;
 	public KeyCode toggleDockKey = KeyCode.F;
 
+	private GameObject objectiveTextPrefab;
+
 	// To initialize in the inspector.
 	public Vector3 inDirection;
 	public Vector3 outDirection;
@@ -26,15 +29,17 @@ public class Ship : MonoBehaviour {
 	public Motherland motherland;
 	public DockingProbe dockingProbe;
 
+	public int dockingStationId;
 	public Vector3 startPos;
 	public Vector3 exitPos;
-	[HideInInspector] public bool docked;
+
 
 	// Ship Info
 	[HideInInspector] public string shipName;
 	[HideInInspector] private ResourceType resourceType;
 	[HideInInspector] private float resourceQuantity;
-
+	[HideInInspector] public bool docked;
+	[HideInInspector] public GameObject objectiveText;
 
 	// Use this for initialization
 	void Start () {
@@ -107,6 +112,10 @@ public class Ship : MonoBehaviour {
 
 
 	// Interfacing with ObjectiveManager
+	public string GetShipName () {
+		return shipName;
+	}
+
 	public void SetShipName (string newName) {
 		if (IsInIdleState () == false) {
 			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");

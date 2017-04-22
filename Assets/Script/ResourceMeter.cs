@@ -36,7 +36,7 @@ public class ResourceMeter : MonoBehaviour {
 		float newTopBuffer = (100 - newPercent) / 100 * valueBarMaxHeight + valueBarBuffer;
 		valueBarRect.offsetMax = new Vector2(valueBarRect.offsetMax.x, -newTopBuffer);
 
-		Debug.Log ("ResourceMeter new value height: " + newTopBuffer);
+		//Debug.Log ("ResourceMeter new value height: " + newTopBuffer);
 
 	}
 

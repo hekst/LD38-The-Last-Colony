@@ -18,11 +18,14 @@ public class EnterScreenState : IShipState {
 			ship.transform.position = ship.exitPos;
 		}
 		stepSize = MoveUtil.CalculateStepSize (50, ship.transform.position, ship.startPos, "");
+
 	}
 
 	public override void ExitState ()
 	{
-		base.ExitState ();
+		// TODO this needs to feed into a UI.
+		string objective = ship.GetShipName () + " requesting to dock at station " + ship.dockingStationId + ". " + ship.GetShipResourceQuantity ().ToString () + " " + ship.GetShipResourceType ().ToString () + " on board.";
+		ship.objectiveText = UIManager.manager.InstantiateObjectiveText (objective);
 	}
 
 	public override void Update ()
