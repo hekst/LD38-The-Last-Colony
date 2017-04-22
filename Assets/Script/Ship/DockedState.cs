@@ -30,7 +30,7 @@ public class DockedState : IShipState {
 	public override void Update ()
 	{
 		if (base.ship.GetInputToggleDockKey ()) {
-			base.ship.StateTransitionTo (base.ship.undockedState);
+			base.ship.StateTransitionTo (base.ship.exitScreenState);
 		}
 		// TODO If player tries to move the ship, play a beep indicating they can't while docked.
 	}

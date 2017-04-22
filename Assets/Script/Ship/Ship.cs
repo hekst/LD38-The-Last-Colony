@@ -6,6 +6,8 @@ public class Ship : MonoBehaviour {
 
 	// Ship States
 	IShipState currentState;
+	[HideInInspector] public EnterScreenState enterScreenState;
+	[HideInInspector] public ExitScreenState exitScreenState;
 	[HideInInspector] public UndockedState undockedState;
 	[HideInInspector] public DockedState dockedState;
 
@@ -23,6 +25,10 @@ public class Ship : MonoBehaviour {
 	public Motherland motherland;
 	public DockingProbe dockingProbe;
 
+
+	public string name;
+	public Vector3 startPos;
+	public Vector3 exitPos;
 	[HideInInspector] public bool docked;
 
 	// Use this for initialization
@@ -41,10 +47,14 @@ public class Ship : MonoBehaviour {
 
 
 	void InitializeStates () {
+		enterScreenState = new EnterScreenState (this);
+		exitScreenState = new ExitScreenState (this);
 		undockedState = new UndockedState (this);
 		dockedState = new DockedState (this);
-		// All ships are undocked initially.
-		currentState = undockedState;
+
+		Debug.Log ("Ship's initial state: EnterScreen");
+		currentState = enterScreenState;
+		currentState.EnterState ();
 	}
 
 	public void StateTransitionTo (IShipState newState) {
@@ -72,4 +82,17 @@ public class Ship : MonoBehaviour {
 	public void AddForceToShip (Vector3 force) {
 		shipRigidbody.AddForce (force);
 	}
+
+
+
+
+
+	// Ship Position
+	public bool IsShipAtStartPos () {
+		return gameObject.transform.position == startPos;
+	}
+	public bool IsShipAtExitPos () {
+		return gameObject.transform.position == exitPos;
+	}
+
 }

@@ -1,0 +1,40 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnterScreenState : IShipState {
+
+	Ship ship;
+	Vector2 stepSize;
+
+	public EnterScreenState (Ship ship) : base (ship) {
+		this.ship = ship;
+	}
+
+	public override void EnterState ()
+	{
+		if (ship.IsShipAtExitPos () == false) {
+			Debug.Log ("Ship:EnterScreenState Ship is not at Exit Position when it is expected! Do check!");
+			ship.transform.position = ship.exitPos;
+		}
+		stepSize = MoveUtil.CalculateStepSize (50, ship.transform.position, ship.startPos, "");
+	}
+
+	public override void ExitState ()
+	{
+		base.ExitState ();
+	}
+
+	public override void Update ()
+	{
+		if (ship.IsShipAtStartPos ()) {
+			ship.StateTransitionTo (ship.undockedState);
+		} else {
+			MoveUtil.MoveByStepSizeToDest (ship.transform, ship.startPos, stepSize, "");
+		}
+	}
+
+
+
+
+}
