@@ -23,10 +23,22 @@ public class ObjectiveManager : MonoBehaviour {
 
 	IEnumerator TestSailOut () {
 		yield return new WaitForSeconds (2.0f);
-		SetupShipAndSailItOut ();
+		SetOutOxygenShip ();
 	}
 
-	void SetupShipAndSailItOut () {
+
+	public void AddAvailableShip (Ship ship) {
+		listAvailableShips.Add (ship);
+	}
+
+	void SetOutOxygenShip () {
+		SetupShipAndSailItOut (
+			ResourceType.Oxygen,
+			AssignNumOxygen ()
+		);
+	}
+
+	void SetupShipAndSailItOut (ResourceType resource, float resourceQuantity) {
 		Ship ship = GetAvailableShip ();
 		// No ship available.
 		if (ship == null) {
@@ -34,8 +46,11 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 
 		// Setup Ship
-		ship.name = GetNameOfShip ();
+		ship.SetShipName (GetNameOfShip ());
+		ship.SetShipResourceType (resource);
+		ship.SetShipResourceQuantity (resourceQuantity);
 
+		// Sail it out
 		ship.SailOutShip ();
 	}
 
@@ -59,8 +74,18 @@ public class ObjectiveManager : MonoBehaviour {
 	}
 
 
-	public void AddAvailableShip (Ship ship) {
-		listAvailableShips.Add (ship);
+
+	// Assign resource quantity
+	float AssignNumFoodAndWater () {
+		return Random.Range (15.0f, 25.0f);
+	}
+
+	float AssignNumOxygen () {
+		return Random.Range (10.0f, 15.0f);
+	}
+
+	float AssignNumPeople () {
+		return Random.Range (30.0f, 50.0f);
 	}
 
 }

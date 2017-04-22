@@ -26,11 +26,15 @@ public class Ship : MonoBehaviour {
 	public Motherland motherland;
 	public DockingProbe dockingProbe;
 
-
-	public string name;
 	public Vector3 startPos;
 	public Vector3 exitPos;
 	[HideInInspector] public bool docked;
+
+	// Ship Info
+	[HideInInspector] public string shipName;
+	[HideInInspector] private ResourceType resourceType;
+	[HideInInspector] private float resourceQuantity;
+
 
 	// Use this for initialization
 	void Start () {
@@ -54,8 +58,9 @@ public class Ship : MonoBehaviour {
 		undockedState = new UndockedState (this);
 		dockedState = new DockedState (this);
 
-		Debug.Log ("Ship's initial state: " + idleState.ToString ());
 		currentState = idleState;
+		Debug.Log ("Ship's initial state: " + currentState.ToString ());
+
 		currentState.EnterState ();
 	}
 
@@ -65,11 +70,14 @@ public class Ship : MonoBehaviour {
 		currentState.EnterState ();
 
 		// If transitioning to Idle State, let ObjectiveManager know.
-		if (currentState.ToString () == idleState.ToString ()) {
+		if (IsInIdleState ()) {
 			ObjectiveManager.manager.AddAvailableShip (this);
 		}
 	}
 
+	public bool IsInIdleState () {
+		return currentState.ToString () == idleState.ToString ();
+	}
 
 	// Control
 	public bool GetInputToggleDockKey () {
@@ -99,9 +107,33 @@ public class Ship : MonoBehaviour {
 
 
 	// Interfacing with ObjectiveManager
+	public void SetShipName (string newName) {
+		if (IsInIdleState () == false) {
+			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");
+		}
+		shipName = newName;
+	}
+
+	public void SetShipResourceType (ResourceType rt) {
+		if (IsInIdleState () == false) {
+			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");
+		}
+		resourceType = rt;
+	}
+
+	public void SetShipResourceQuantity (float q) {
+		if (IsInIdleState () == false) {
+			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");
+		}
+		if (q < 0) {
+			q = 0;
+		}
+		resourceQuantity = q;
+	}
+
 	public void SailOutShip () {
-		Debug.Log (gameObject.transform.name + " sailing out.");
-		if (currentState.ToString () != idleState.ToString ()) {
+		Debug.Log (shipName + " sailing out with " + resourceQuantity + " " + resourceType.ToString () + ".");
+		if (IsInIdleState () == false) {
 			Debug.LogError ("Ship:SailOutShip Trying to send out a ship that's already out!");
 			return;
 		} else {
