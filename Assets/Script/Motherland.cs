@@ -29,23 +29,19 @@ public class Motherland : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision other) {
-		CheckMomentum ();
-	}
-
-	// If velocity above threshold, do something. Destroyed resources, people falling off the station..
-	void CheckMomentum () {
-		if (IsMomentumAboveThreshold ()) {
-			Debug.Log ("[Motherland:IsMomentumAboveThreshold] Threshold Crossed!! " + mlRigidbody.velocity);
+		if (other.transform.CompareTag ("CargoShip")
+			&& other.relativeVelocity.magnitude > maxVelocityTolerated) {
+			Debug.Log ("THE IMPACT FROM SHIP WAS INCREDIBLE!!" + other.relativeVelocity.magnitude);
+			DamageRandomResources (other.relativeVelocity.magnitude);
 		}
 	}
 
-	bool IsMomentumAboveThreshold () {
-		if (mlRigidbody.velocity.x > maxVelocityTolerated
-			|| mlRigidbody.velocity.y > maxVelocityTolerated
-			|| mlRigidbody.velocity.z > maxVelocityTolerated) {
-			return true;
-		} else {
-			return false;
-		}
+	void DamageRandomResources (float magnitude) {
+		int numType = System.Enum.GetNames (typeof (ResourceType)).Length;
+		int rand = Random.Range (0, numType);
+		ResourceType damagedResource = (ResourceType)rand;
+
+		// TODO Adjust collision damage here
+		AddResources (damagedResource, -magnitude);
 	}
 }
