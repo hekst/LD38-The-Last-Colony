@@ -18,12 +18,25 @@ public class MotherlandResources : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InitializeResources (35, 25, 50);
+		InitializeResources (35, 35, 50);
+
+		StartCoroutine (DepleteResourceEverySecond ());
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	IEnumerator DepleteResourceEverySecond () {
+		yield return new WaitForSeconds (1.0f);
+		int numTypes = System.Enum.GetNames (typeof (ResourceType)).Length;
+		for (int i = 0; i < numTypes; i++) {
+			ResourceType r = (ResourceType)i;
+			AddToResources (r, r.GetDepletionRatePerSec ());
+		}
+		StartCoroutine (DepleteResourceEverySecond ());
 	}
 
 	// Return false if resources are at maximum capacity
