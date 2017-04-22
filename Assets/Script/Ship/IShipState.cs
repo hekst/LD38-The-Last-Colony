@@ -22,4 +22,8 @@ public class IShipState {
 
 	}
 
+	public virtual void OnCollisionEnter (Collision other) {
+
+	}
+
 }

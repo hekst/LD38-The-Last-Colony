@@ -68,16 +68,10 @@ public class Ship : MonoBehaviour {
 	// Collision Impact //
 	//////////////////////
 	void OnCollisionEnter (Collision other) {
-		Debug.Log ("Ship " + shipName + " collided with " + other.transform.name);
-		//CheckMomentum ();
-		if (other.transform.CompareTag ("Motherland") 
-			&& other.relativeVelocity.magnitude > maxVelocityTolerated) {
-			Debug.Log ("THE IMPACT WAS INCREDIBLE! " + other.relativeVelocity.magnitude);
-			DamageCargo (other.relativeVelocity.magnitude);
-		}
+		currentState.OnCollisionEnter (other);
 	}
 
-	void DamageCargo (float magnitude) {
+	public void DamageCargo (float magnitude) {
 		// TODO Adjust the damage.
 		SetShipResourceQuantity (GetShipResourceQuantity () - magnitude);
 	}
