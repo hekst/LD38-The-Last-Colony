@@ -39,6 +39,7 @@ public class DockedState : IShipState {
 	// Ship stops moving but remaining kinetic energy will still be transfered
 	// to the motherland. You have to be gentle when docking.
 	void HaltShipAndTransferMomentum () {
+		CheckMomentumAtDocking ();
 		base.ship.motherland.AddForceToMotherland (base.ship.shipRigidbody.velocity * dockingImpact);
 		base.ship.shipRigidbody.velocity = Vector3.zero;
 	}
@@ -57,6 +58,11 @@ public class DockedState : IShipState {
 
 	void PushShipOutwards () {
 		base.ship.AddForceToShip (base.ship.outDirection * dockingImpact);
+	}
+
+	// Checks velocity at docking. If above threshold, do something here.
+	void CheckMomentumAtDocking () {
+
 	}
 
 }
