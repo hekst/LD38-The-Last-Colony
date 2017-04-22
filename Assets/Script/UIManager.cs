@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour {
 	public GameObject objectiveWindow;
 	private GameObject objectiveTextPrefab;
 
+	public Text [] stationInfo; 
+	public Text [] stationStatus;
+
 	void Awake () {
 		if (manager == null) {
 			manager = this;
@@ -45,4 +48,24 @@ public class UIManager : MonoBehaviour {
 		Destroy (obj);
 	}
 
+
+	public void SetupStationInfo (int stationId, Ship ship) {
+		if (stationId < 0 || stationId >= 4) {
+			Debug.LogError ("UI Manager: SetupStationInfo Rogue StationId provided: " + stationId);
+			return;
+		}
+			
+		string display = "Cargo from " + ship.shipName + " with " + ship.GetShipResourceType ().ToString ();
+		stationInfo [stationId].text = display;
+		SetupStationStatus (stationId, "Incoming cargo...");
+	}
+
+	public void SetupStationStatus (int stationId, string status) {
+		stationStatus [stationId].text = "Status: " + status;
+	}
+
+	public void ResetStationInfo (int stationId) {
+		stationInfo [stationId].text = "Station" + (stationId + 1).ToString ();
+		stationStatus [stationId].text = "Status: Standing by...";
+	}
 }

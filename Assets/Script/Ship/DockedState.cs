@@ -19,6 +19,9 @@ public class DockedState : IShipState {
 
 		HaltShipAndTransferMomentum ();
 
+		//
+		UIManager.manager.SetupStationStatus (base.ship.dockingStationId, base.ship.dockedAndUnloadingStatusMsg);
+
 		// Start Unloading
 		base.ship.StartUnloading ();
 	}

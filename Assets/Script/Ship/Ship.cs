@@ -39,7 +39,14 @@ public class Ship : MonoBehaviour {
 	[HideInInspector] private ResourceType resourceType;
 	[HideInInspector] private float resourceQuantity;
 	[HideInInspector] public bool docked;
-	[HideInInspector] public GameObject objectiveText;
+
+
+
+	// Ship Status String
+	[HideInInspector] public string awaitingDockingStatusMsg 				= "Awaiting docking.";
+	[HideInInspector] public string dockedAndUnloadingStatusMsg 			= "Docked. Unloading...";
+	[HideInInspector] public string dockedAndFinishedUnloadingStatusMsg 	= "Docked. Finished unloading.";
+	[HideInInspector] public string undockingAndReturningStatusMsg 			= "Undocked. Returning to "; // Expected to be followed by shipName
 
 	// Use this for initialization
 	void Start () {

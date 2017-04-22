@@ -8,6 +8,11 @@ public class UndockedState : IShipState {
 
 	}
 
+	public override void EnterState ()
+	{
+		UIManager.manager.SetupStationStatus (base.ship.dockingStationId, base.ship.awaitingDockingStatusMsg);
+	}
+
 	public override void Update ()
 	{
 		UpdateShipMovement ();

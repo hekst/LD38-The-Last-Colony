@@ -15,7 +15,13 @@ public class ExitScreenState : IShipState {
 	{
 		stepSize = MoveUtil.CalculateStepSize (50, ship.transform.position, ship.startPos, "");
 		// Player no longer has control of the ship. Pulling down objective text here.
-		UIManager.manager.DestroyObjectiveText (ship.objectiveText);
+
+		UIManager.manager.SetupStationStatus (ship.dockingStationId, ship.undockingAndReturningStatusMsg + ship.shipName);
+	}
+
+	public override void ExitState ()
+	{
+		UIManager.manager.ResetStationInfo (ship.dockingStationId);
 	}
 
 	public override void Update ()
