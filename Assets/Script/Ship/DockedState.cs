@@ -24,17 +24,14 @@ public class DockedState : IShipState {
 
 	public override void ExitState ()
 	{
-		base.ship.docked = false;
-		Debug.Log (base.ship.gameObject.transform.name + " undocked.");
-		base.ship.gameObject.transform.parent = null;
+		Undock ();
 	}
 
 	public override void Update ()
 	{
 		if (base.ship.GetInputToggleDockKey ()) {
-			Undock ();
+			base.ship.StateTransitionTo (base.ship.undockedState);
 		}
-
 		// TODO If player tries to move the ship, play a beep indicating they can't while docked.
 	}
 
