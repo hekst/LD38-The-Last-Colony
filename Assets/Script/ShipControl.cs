@@ -39,14 +39,14 @@ public class ShipControl : MonoBehaviour {
 		Vector3 movement = new Vector3 (0, 0, 0);
 
 		if (Input.GetKey (toggleDockKey)) {
-			Debug.Log ("Docking/Undocking the ship.");
+			//Debug.Log ("Docking/Undocking the ship.");
 		}
 		if (Input.GetKey (moveInwardKey)) {
-			Debug.Log ("Moving ship towards the docking station.");
+			//Debug.Log ("Moving ship towards the docking station.");
 			movement += inDirection;
 		}
 		if (Input.GetKey (moveOutwardKey)) {
-			Debug.Log ("Moving ship away from the docking station.");
+			//Debug.Log ("Moving ship away from the docking station.");
 			movement += outDirection;
 		}
 
