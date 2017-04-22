@@ -26,7 +26,6 @@ public class ObjectiveManager : MonoBehaviour {
 		SetOutOxygenShip ();
 	}
 
-
 	public void AddAvailableShip (Ship ship) {
 		listAvailableShips.Add (ship);
 	}
@@ -67,13 +66,9 @@ public class ObjectiveManager : MonoBehaviour {
 		return retShip;
 	}
 
-
-
 	string GetNameOfShip () {
 		return "Albatross";
 	}
-
-
 
 	// Assign resource quantity
 	float AssignNumFoodAndWater () {

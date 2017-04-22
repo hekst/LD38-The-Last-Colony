@@ -22,8 +22,8 @@ public class ResourceMeter : MonoBehaviour {
 	void GetMeterHeight () {
 		meterShellHeight = myRect.rect.height;
 		valueBarMaxHeight = meterShellHeight - (valueBarBuffer * 2);
-		Debug.Log ("ResourceMeter shell height: " + meterShellHeight);
-		Debug.Log ("ResourceMeter value max height: " + valueBarMaxHeight);
+		//Debug.Log ("ResourceMeter shell height: " + meterShellHeight);
+		//Debug.Log ("ResourceMeter value max height: " + valueBarMaxHeight);
 	}
 
 	public void UpdateValueBar (float newPercent) {

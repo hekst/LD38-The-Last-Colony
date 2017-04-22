@@ -18,12 +18,16 @@ public class DockedState : IShipState {
 		base.ship.gameObject.transform.parent = base.ship.motherland.gameObject.transform;
 
 		HaltShipAndTransferMomentum ();
+
+		// Start Unloading
+		base.ship.StartUnloading ();
 	}
-
-
 
 	public override void ExitState ()
 	{
+		// Logic for stop unloading is in Ship.cs
+
+		// Undock
 		Undock ();
 	}
 
@@ -33,6 +37,7 @@ public class DockedState : IShipState {
 			base.ship.StateTransitionTo (base.ship.exitScreenState);
 		}
 		// TODO If player tries to move the ship, play a beep indicating they can't while docked.
+
 	}
 
 	// When docking
@@ -43,6 +48,8 @@ public class DockedState : IShipState {
 		base.ship.motherland.AddForceToMotherland (base.ship.shipRigidbody.velocity * dockingImpact);
 		base.ship.shipRigidbody.velocity = Vector3.zero;
 	}
+
+
 
 
 	// When undocking

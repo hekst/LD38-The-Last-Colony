@@ -114,6 +114,10 @@ public class Ship : MonoBehaviour {
 		shipName = newName;
 	}
 
+	public ResourceType GetShipResourceType () {
+		return resourceType;
+	}
+
 	public void SetShipResourceType (ResourceType rt) {
 		if (IsInIdleState () == false) {
 			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");
@@ -121,10 +125,11 @@ public class Ship : MonoBehaviour {
 		resourceType = rt;
 	}
 
+	public float GetShipResourceQuantity () {
+		return resourceQuantity;
+	}
+
 	public void SetShipResourceQuantity (float q) {
-		if (IsInIdleState () == false) {
-			Debug.Log ("!!Ship Trying to change ship info while not in idle state!!");
-		}
 		if (q < 0) {
 			q = 0;
 		}
@@ -140,4 +145,25 @@ public class Ship : MonoBehaviour {
 			StateTransitionTo (enterScreenState);
 		}
 	}
+
+	//
+	// Unloading System
+	public void StartUnloading () {
+		Debug.Log (shipName + " started unloading " + resourceType);
+		StartCoroutine (UnloadEverySecond ());
+	}
+
+	// Unload every second
+	IEnumerator UnloadEverySecond () {
+		yield return new WaitForSeconds (1.0f);
+		float quantity = GetShipResourceQuantity ();
+		float unloadRate = GetShipResourceType ().GetUnloadRatePerSec ();
+		if ((quantity > 0) && (docked == true)) {
+			SetShipResourceQuantity (quantity - unloadRate);
+			StartCoroutine (UnloadEverySecond ());
+		} else {
+			Debug.Log (shipName + " either finished unloading or undocked while unloading. Remaining resource amount: " + resourceQuantity);
+		}
+	}
+
 }

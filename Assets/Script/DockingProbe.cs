@@ -27,7 +27,7 @@ public class DockingProbe : MonoBehaviour {
 
 	void OnTriggerExit (Collider other) {
 		if (other.CompareTag (TagList.dockingProbe)) {
-			Debug.Log ("Docking probe getting out of range from other probe " + other.transform.name);
+			//Debug.Log ("Docking probe getting out of range from other probe " + other.transform.name);
 			dockProbeInRange = false;
 		}
 	}
