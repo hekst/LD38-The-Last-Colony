@@ -13,7 +13,7 @@ public class Ship : MonoBehaviour {
 	[HideInInspector] public UndockedState undockedState;
 	[HideInInspector] public DockedState dockedState;
 
-	public Rigidbody shipRigidbody;
+	[HideInInspector] public Rigidbody shipRigidbody;
 
 	public float maxVelocityTolerated = 2.0f;
 
