@@ -194,9 +194,8 @@ public class Ship : MonoBehaviour {
 			// Unload only when motherland has space.
 			if (motherland.AddResources (resourceType, unloadRate)) {
 				SetShipResourceQuantity (quantity - unloadRate);
-				StartCoroutine (UnloadEverySecond ());
 			}
-
+			StartCoroutine (UnloadEverySecond ());
 		} else if (quantity <= 0) {
 			Debug.Log (shipName + " finished unloading.");
 			UIManager.manager.SetupStationStatus (dockingStationId, dockedAndFinishedUnloadingStatusMsg);
