@@ -177,9 +177,13 @@ public class Ship : MonoBehaviour {
 		if ((quantity > 0) && (docked == true)) {
 			SetShipResourceQuantity (quantity - unloadRate);
 			motherland.AddResources (resourceType, unloadRate);
+			UIManager.manager.UpdateStationInfoQuantity (dockingStationId, this);
 			StartCoroutine (UnloadEverySecond ());
+		} else if (quantity <= 0) {
+			Debug.Log (shipName + " finished unloading.");
+			UIManager.manager.SetupStationStatus (dockingStationId, dockedAndFinishedUnloadingStatusMsg);
 		} else {
-			Debug.Log (shipName + " either finished unloading or undocked while unloading. Remaining resource amount: " + resourceQuantity);
+			Debug.Log (shipName + " undocked while unloading. Remaining resource amount: " + resourceQuantity);
 		}
 	}
 

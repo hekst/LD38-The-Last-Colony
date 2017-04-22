@@ -10,8 +10,11 @@ public class UIManager : MonoBehaviour {
 	public GameObject objectiveWindow;
 	private GameObject objectiveTextPrefab;
 
-	public Text [] stationInfo; 
+	public Text [] stationInfoShipName;
+	public Text [] stationInfoCargoType;
+	public Text [] stationInfoQuantity;
 	public Text [] stationStatus;
+
 
 	void Awake () {
 		if (manager == null) {
@@ -23,6 +26,10 @@ public class UIManager : MonoBehaviour {
 		objectiveTextPrefab = Resources.Load ("UIPrefabs/ObjectiveText", typeof(GameObject)) as GameObject;
 		if (objectiveTextPrefab == null) {
 			Debug.LogError ("UIManager:Awake Failed to load objective text prefab!!");
+		}
+
+		for (int i = 0; i < stationStatus.Length; i++) {
+			ResetStationInfo (i);
 		}
 
 	}
@@ -55,9 +62,20 @@ public class UIManager : MonoBehaviour {
 			return;
 		}
 			
-		string display = "Cargo from " + ship.shipName + " with " + ship.GetShipResourceType ().ToString ();
-		stationInfo [stationId].text = display;
+		stationInfoShipName [stationId].text 	= ship.GetShipName ();
+		stationInfoCargoType [stationId].text 	= "Cargo Type: " 	+ ship.GetShipResourceType ().ToString ();
+		stationInfoQuantity [stationId].text 	= "Amount: " 		+ ((int)ship.GetShipResourceQuantity ()).ToString ();
+
 		SetupStationStatus (stationId, "Incoming cargo...");
+	}
+	public void UpdateStationInfoQuantity (int stationId, Ship ship) {
+		if (stationId < 0 || stationId >= 4) {
+			Debug.LogError ("UI Manager: SetupStationInfo Rogue StationId provided: " + stationId);
+			return;
+		}
+
+		stationInfoQuantity [stationId].text 	= "Amount: " 		+ ((int)ship.GetShipResourceQuantity ()).ToString ();
+
 	}
 
 	public void SetupStationStatus (int stationId, string status) {
@@ -65,7 +83,10 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ResetStationInfo (int stationId) {
-		stationInfo [stationId].text = "Station" + (stationId + 1).ToString ();
+		stationInfoShipName [stationId].text = "";
+		stationInfoCargoType [stationId].text = "Cargo Type: ";
+		stationInfoQuantity [stationId].text = "Amount: ";
+
 		stationStatus [stationId].text = "Status: Standing by...";
 	}
 }
