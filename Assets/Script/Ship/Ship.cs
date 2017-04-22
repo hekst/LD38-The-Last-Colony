@@ -6,6 +6,7 @@ public class Ship : MonoBehaviour {
 
 	// Ship States
 	IShipState currentState;
+	[HideInInspector] public IdleState idleState;
 	[HideInInspector] public EnterScreenState enterScreenState;
 	[HideInInspector] public ExitScreenState exitScreenState;
 	[HideInInspector] public UndockedState undockedState;
@@ -47,13 +48,14 @@ public class Ship : MonoBehaviour {
 
 
 	void InitializeStates () {
+		idleState = new IdleState (this);
 		enterScreenState = new EnterScreenState (this);
 		exitScreenState = new ExitScreenState (this);
 		undockedState = new UndockedState (this);
 		dockedState = new DockedState (this);
 
-		Debug.Log ("Ship's initial state: EnterScreen");
-		currentState = enterScreenState;
+		Debug.Log ("Ship's initial state: " + idleState.ToString ());
+		currentState = idleState;
 		currentState.EnterState ();
 	}
 
@@ -61,11 +63,15 @@ public class Ship : MonoBehaviour {
 		currentState.ExitState ();
 		currentState = newState;
 		currentState.EnterState ();
+
+		// If transitioning to Idle State, let ObjectiveManager know.
+		if (currentState.ToString () == idleState.ToString ()) {
+			ObjectiveManager.manager.AddAvailableShip (this);
+		}
 	}
 
 
 	// Control
-
 	public bool GetInputToggleDockKey () {
 		return Input.GetKeyUp (toggleDockKey);
 	}
@@ -83,10 +89,6 @@ public class Ship : MonoBehaviour {
 		shipRigidbody.AddForce (force);
 	}
 
-
-
-
-
 	// Ship Position
 	public bool IsShipAtStartPos () {
 		return gameObject.transform.position == startPos;
@@ -95,4 +97,15 @@ public class Ship : MonoBehaviour {
 		return gameObject.transform.position == exitPos;
 	}
 
+
+	// Interfacing with ObjectiveManager
+	public void SailOutShip () {
+		Debug.Log (gameObject.transform.name + " sailing out.");
+		if (currentState.ToString () != idleState.ToString ()) {
+			Debug.LogError ("Ship:SailOutShip Trying to send out a ship that's already out!");
+			return;
+		} else {
+			StateTransitionTo (enterScreenState);
+		}
+	}
 }

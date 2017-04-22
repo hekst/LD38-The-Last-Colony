@@ -18,7 +18,9 @@ public class ExitScreenState : IShipState {
 
 	public override void Update ()
 	{
-		if (ship.IsShipAtExitPos () == false) {
+		if (ship.IsShipAtExitPos ()) {
+			ship.StateTransitionTo (ship.idleState);
+		} else {
 			MoveUtil.MoveByStepSizeToDest (ship.transform, ship.exitPos, stepSize, "");
 		}
 	}

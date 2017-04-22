@@ -18,10 +18,15 @@ public class ObjectiveManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		StartCoroutine (TestSailOut ());
 	}
 
-	void SetupShip () {
+	IEnumerator TestSailOut () {
+		yield return new WaitForSeconds (2.0f);
+		SetupShipAndSailItOut ();
+	}
+
+	void SetupShipAndSailItOut () {
 		Ship ship = GetAvailableShip ();
 		// No ship available.
 		if (ship == null) {
@@ -31,7 +36,7 @@ public class ObjectiveManager : MonoBehaviour {
 		// Setup Ship
 		ship.name = GetNameOfShip ();
 
-
+		ship.SailOutShip ();
 	}
 
 	Ship GetAvailableShip () {
@@ -51,6 +56,11 @@ public class ObjectiveManager : MonoBehaviour {
 
 	string GetNameOfShip () {
 		return "Albatross";
+	}
+
+
+	public void AddAvailableShip (Ship ship) {
+		listAvailableShips.Add (ship);
 	}
 
 }
