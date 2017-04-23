@@ -50,6 +50,8 @@ public class Ship : MonoBehaviour {
 	[HideInInspector] public string dockedAndUnloadingStatusMsg 			= "Docked. Unloading...";
 	[HideInInspector] public string dockedAndFinishedUnloadingStatusMsg 	= "Docked. Finished unloading.";
 	[HideInInspector] public string undockingAndReturningStatusMsg 			= "Undocked. Returning to "; // Expected to be followed by shipName
+	[HideInInspector] public string evacuateStatusMsg_0						= "!! INFECTED FOUND !!";
+	[HideInInspector] public string evacuateStatusMsg_1 					= "!! UNDOCK IMMEDIATELY !!";
 
 	// Use this for initialization
 	void Start () {

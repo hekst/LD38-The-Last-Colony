@@ -63,8 +63,8 @@ public class UIManager : MonoBehaviour {
 		}
 			
 		stationInfoShipName [stationId].text 	= ship.GetShipName ();
-		stationInfoCargoType [stationId].text 	= "Cargo Type: " 	+ ship.GetShipResourceType ().ToString ();
-		stationInfoQuantity [stationId].text 	= "Amount: " 		+ ((int)ship.GetShipResourceQuantity ()).ToString ();
+		stationInfoCargoType [stationId].text 	= ship.GetShipResourceType ().ToString ();
+		stationInfoQuantity [stationId].text 	= ((int)ship.GetShipResourceQuantity ()).ToString ();
 
 		SetupStationStatus (stationId, "Incoming cargo...");
 	}
@@ -74,19 +74,19 @@ public class UIManager : MonoBehaviour {
 			return;
 		}
 
-		stationInfoQuantity [stationId].text 	= "Amount: " 		+ ((int)ship.GetShipResourceQuantity ()).ToString ();
+		stationInfoQuantity [stationId].text 	= ((int)ship.GetShipResourceQuantity ()).ToString ();
 
 	}
 
 	public void SetupStationStatus (int stationId, string status) {
-		stationStatus [stationId].text = "Status: " + status;
+		stationStatus [stationId].text = status;
 	}
 
 	public void ResetStationInfo (int stationId) {
 		stationInfoShipName [stationId].text = "";
-		stationInfoCargoType [stationId].text = "Cargo Type: ";
-		stationInfoQuantity [stationId].text = "Amount: ";
+		stationInfoCargoType [stationId].text = "";
+		stationInfoQuantity [stationId].text = "";
 
-		stationStatus [stationId].text = "Status: Standing by...";
+		stationStatus [stationId].text = "Standing by...";
 	}
 }
