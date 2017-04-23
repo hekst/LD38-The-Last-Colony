@@ -127,7 +127,7 @@ public class ObjectiveManager : MonoBehaviour {
 		}
 
 		// Setup Ship
-		ship.SetShipName (GetNameOfShip ());
+		ship.SetShipName (GetNameOfShip (resource));
 		ship.SetShipResourceType (resource);
 		ship.SetShipResourceQuantity (resourceQuantity);
 
@@ -149,8 +149,15 @@ public class ObjectiveManager : MonoBehaviour {
 		return retShip;
 	}
 
-	string GetNameOfShip () {
-		return "Albatross";
+	string GetNameOfShip (ResourceType resourceType) {
+		string name;
+		if (resourceType == ResourceType.People) {
+			name = ShipNames.GetRandomPassengerShipName ();
+		} else {
+			name = ShipNames.GetRandomCargoShipName ();
+		}
+
+		return name;
 	}
 
 
