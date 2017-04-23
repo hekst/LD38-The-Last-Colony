@@ -7,6 +7,7 @@ public class ResourceMeter : MonoBehaviour {
 
 	public RectTransform valueBarRect;
 	public float valueBarBuffer = 2.0f;
+	public ParticleSystem warningLightPs;
 
 	RectTransform myRect;
 	float meterShellHeight;
@@ -16,7 +17,7 @@ public class ResourceMeter : MonoBehaviour {
 	void Start () {
 		myRect = gameObject.GetComponent <RectTransform> ();
 		GetMeterHeight ();
-
+		WarningLightOff ();
 		//UpdateValueBarVertical (80.0f);
 	}
 
@@ -28,20 +29,6 @@ public class ResourceMeter : MonoBehaviour {
 		//Debug.Log ("ResourceMeter value max height: " + valueBarMaxHeight);
 	}
 
-	public void UpdateValueBarVertical (float newPercent) {
-		if (newPercent > 100) {
-			newPercent = 100;
-		} else if (newPercent < 0) {
-			newPercent = 0;
-		}
-
-		float newTopBuffer = (100 - newPercent) / 100 * valueBarMaxHeight + valueBarBuffer;
-		valueBarRect.offsetMax = new Vector2(valueBarRect.offsetMax.x, -newTopBuffer);
-
-		//Debug.Log ("ResourceMeter new value height: " + newTopBuffer);
-
-	}
-
 	public void UpdateValueBarHorizontal (float newPercent) {
 		if (newPercent > 100) {
 			newPercent = 100;
@@ -51,5 +38,35 @@ public class ResourceMeter : MonoBehaviour {
 
 		float newRight = (100 - newPercent) / 100 * valueBarMaxWidth;
 		valueBarRect.offsetMax = new Vector2 (-newRight, valueBarRect.offsetMax.y);
+
+
+		if (newPercent < 30) {
+			WarningOn ();
+		} else {
+			WarningOff ();
+		}
 	}
+
+
+	void WarningOn () {
+		WarningLightOn ();
+		AudioManager.manager.PlayMeterWarningLightOn ();
+	}
+
+	void WarningOff () {
+		WarningLightOff ();
+	}
+
+
+	// Control Warning "Light"
+
+	void WarningLightOn () {
+		warningLightPs.Play ();
+	}
+
+	void WarningLightOff () {
+		warningLightPs.Stop ();
+	}
+
+
 }
