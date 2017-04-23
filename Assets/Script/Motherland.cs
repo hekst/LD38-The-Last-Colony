@@ -7,6 +7,9 @@ public class Motherland : MonoBehaviour {
 	Rigidbody mlRigidbody;
 	MotherlandResources resources;
 
+	public DamageReportControl dmgRpt;
+
+
 	public float maxVelocityTolerated = 1.0f;
 
 	// Use this for initialization
@@ -40,6 +43,9 @@ public class Motherland : MonoBehaviour {
 		int numType = System.Enum.GetNames (typeof (ResourceType)).Length;
 		int rand = Random.Range (0, numType);
 		ResourceType damagedResource = (ResourceType)rand;
+
+		dmgRpt.UpdateDamageReport (damagedResource, "-" + ((int)magnitude).ToString ());
+
 
 		// TODO Adjust collision damage here
 		AddResources (damagedResource, -magnitude);
