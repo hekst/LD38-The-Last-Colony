@@ -20,6 +20,16 @@ public class UndockedState : IShipState {
 	public override void Update ()
 	{
 		UpdateShipMovement ();
+		CheckInputAndPlayEffects ();
+	}
+
+	void CheckInputAndPlayEffects () {
+		if (base.ship.GetInputMoveInwardKey ()) {
+			MoveInShipEffect ();
+		}
+		if (base.ship.GetInputMoveOutwardKey ()) {
+			MoveOutShipEffect ();
+		}
 	}
 
 	public override void OnCollisionEnter (Collision other)
@@ -34,6 +44,8 @@ public class UndockedState : IShipState {
 			if (base.ship.GetShipResourceQuantity () < 1) {
 				base.ship.StateTransitionTo (base.ship.exitScreenState);
 			}
+			PlayCollisionEffect ();
+			base.ship.dmgReportText.UpdateDamageReport (base.ship.GetShipResourceType (), "-" + ((int)other.relativeVelocity.magnitude).ToString ());
 		}
 	}
 
@@ -67,9 +79,24 @@ public class UndockedState : IShipState {
 		return movement;
 	}
 
+	void MoveInShipEffect () {
+		AudioManager.manager.PlayShipThruster ();
+	}
+
+	void MoveOutShipEffect () {
+		AudioManager.manager.PlayShipThruster ();
+	}
+
+	void PlayCollisionEffect () {
+		AudioManager.manager.PlayShipCollision ();
+
+
+
+	}
 
 	void TryToDock () {
 		base.ship.StateTransitionTo (base.ship.dockedState);
+
 	}
 
 }

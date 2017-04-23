@@ -24,4 +24,12 @@ public class AudioManager : MonoBehaviour {
 		Debug.Log ("Insert sound here.");
 	}
 
+	public void PlayShipThruster () {
+		Debug.Log ("Insert sound here");
+	}
+
+	public void PlayShipCollision () {
+		Debug.Log ("Insert sound here");
+	}
+
 }
