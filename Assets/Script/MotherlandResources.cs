@@ -71,7 +71,7 @@ public class MotherlandResources : MonoBehaviour {
 		this.foodAndWater = food;
 
 		// Update UI
-		foodAndWaterMeter.UpdateValueBar (this.foodAndWater);
+		foodAndWaterMeter.UpdateValueBarHorizontal (this.foodAndWater);
 		return true;
 	}
 
@@ -86,7 +86,7 @@ public class MotherlandResources : MonoBehaviour {
 		this.oxygen = ox;
 
 		// Update UI
-		oxygenMeter.UpdateValueBar (this.oxygen);
+		oxygenMeter.UpdateValueBarHorizontal (this.oxygen);
 		return true;
 	}
 
@@ -101,7 +101,7 @@ public class MotherlandResources : MonoBehaviour {
 		this.population = pop;
 
 		// Update UI
-		populationMeter.UpdateValueBar (this.population);
+		populationMeter.UpdateValueBarHorizontal (this.population);
 		return true;
 	}
 

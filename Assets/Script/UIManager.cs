@@ -7,9 +7,6 @@ public class UIManager : MonoBehaviour {
 
 	public static UIManager manager;
 
-	public GameObject objectiveWindow;
-	private GameObject objectiveTextPrefab;
-
 	public Text [] stationInfoShipName;
 	public Text [] stationInfoCargoType;
 	public Text [] stationInfoQuantity;
@@ -22,12 +19,7 @@ public class UIManager : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-
-		objectiveTextPrefab = Resources.Load ("UIPrefabs/ObjectiveText", typeof(GameObject)) as GameObject;
-		if (objectiveTextPrefab == null) {
-			Debug.LogError ("UIManager:Awake Failed to load objective text prefab!!");
-		}
-
+			
 		for (int i = 0; i < stationStatus.Length; i++) {
 			ResetStationInfo (i);
 		}
@@ -42,17 +34,6 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	public GameObject InstantiateObjectiveText (string objective) {
-		GameObject objectiveText = Instantiate (objectiveTextPrefab);
-		objectiveText.transform.SetParent (objectiveWindow.transform, false);
-		objectiveText.GetComponent<Text> ().text = "- " + objective;
-		return objectiveText;
-	}
-
-	public void DestroyObjectiveText (GameObject obj) {
-		Destroy (obj);
 	}
 
 
