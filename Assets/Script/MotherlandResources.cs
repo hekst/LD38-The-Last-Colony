@@ -36,6 +36,16 @@ public class MotherlandResources : MonoBehaviour {
 			ResourceType r = (ResourceType)i;
 			AddToResources (r, r.GetDepletionRatePerSec ());
 		}
+
+		// People starving and suffocating
+		if (foodAndWater < 1) {
+			AddToResources (ResourceType.People, ResourceType.People.GetMortalityRateStarve ());
+		}
+		if (oxygen < 1) {
+			AddToResources (ResourceType.People, ResourceType.People.GetMortalityRateSuffocate ());
+		}
+
+
 		StartCoroutine (DepleteResourceEverySecond ());
 	}
 
@@ -99,6 +109,7 @@ public class MotherlandResources : MonoBehaviour {
 			pop = 0;
 		}
 		this.population = pop;
+
 
 		// Update UI
 		populationMeter.UpdateValueBarHorizontal (this.population);
