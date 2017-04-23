@@ -24,11 +24,15 @@ public class UndockedState : IShipState {
 	}
 
 	void CheckInputAndPlayEffects () {
-		if (base.ship.GetInputMoveInwardKey ()) {
-			MoveInShipEffect ();
+		if ( Input.GetKeyDown (base.ship.moveInwardKey)) {
+			StartMoveInShipEffect ();
+		} else if (Input.GetKeyUp (base.ship.moveInwardKey)) {
+			StopMoveInShipEffect ();
 		}
-		if (base.ship.GetInputMoveOutwardKey ()) {
-			MoveOutShipEffect ();
+		if (Input.GetKeyDown (base.ship.moveOutwardKey)) {
+			StartMoveOutShipEffect ();
+		} else if (Input.GetKeyUp (base.ship.moveOutwardKey)) {
+			StopMoveOutShipEffect ();
 		}
 	}
 
@@ -79,12 +83,27 @@ public class UndockedState : IShipState {
 		return movement;
 	}
 
-	void MoveInShipEffect () {
-		AudioManager.manager.PlayShipThruster ();
+	void StartMoveInShipEffect () {
+		AudioManager.manager.StartPlayShipThruster ();
+
+		base.ship.inArrowActive.SetActive (true);
+
 	}
 
-	void MoveOutShipEffect () {
-		AudioManager.manager.PlayShipThruster ();
+	void StopMoveInShipEffect () {
+		AudioManager.manager.StopPlayShipThruster ();
+
+		base.ship.inArrowActive.SetActive (false);
+	}
+
+	void StartMoveOutShipEffect () {
+		AudioManager.manager.StartPlayShipThruster ();
+		base.ship.outArrowActive.SetActive (true);
+	}
+
+	void StopMoveOutShipEffect () {
+		AudioManager.manager.StopPlayShipThruster ();
+		base.ship.outArrowActive.SetActive (false);
 	}
 
 	void PlayCollisionEffect () {

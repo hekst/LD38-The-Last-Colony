@@ -38,6 +38,10 @@ public class Ship : MonoBehaviour {
 	public Vector3 exitPos;
 
 
+	public GameObject inArrowActive;
+	public GameObject outArrowActive;
+	public GameObject dockedActive;
+
 	// Ship Info
 	[HideInInspector] public string shipName;
 	[HideInInspector] private ResourceType resourceType;

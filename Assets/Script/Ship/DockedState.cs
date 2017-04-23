@@ -22,6 +22,9 @@ public class DockedState : IShipState {
 		//
 		UIManager.manager.SetupStationStatus (base.ship.dockingStationId, base.ship.dockedAndUnloadingStatusMsg);
 
+		base.ship.dockedActive.SetActive (true);
+		AudioManager.manager.PlayDockingSound ();
+
 		// Start Unloading
 		base.ship.StartUnloading ();
 	}
@@ -29,7 +32,8 @@ public class DockedState : IShipState {
 	public override void ExitState ()
 	{
 		// Logic for stop unloading is in Ship.cs
-
+		base.ship.dockedActive.SetActive (false);
+		AudioManager.manager.PlayUndockingSound ();
 		// Undock
 		Undock ();
 	}
