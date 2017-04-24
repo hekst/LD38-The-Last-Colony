@@ -85,24 +85,26 @@ public class UndockedState : IShipState {
 
 	void StartMoveInShipEffect () {
 		AudioManager.manager.StartPlayShipThruster ();
-
+		base.ship.inThrustSmoke.SetActive (true);
 		base.ship.inArrowActive.SetActive (true);
 
 	}
 
 	void StopMoveInShipEffect () {
 		AudioManager.manager.StopPlayShipThruster ();
-
+		base.ship.inThrustSmoke.SetActive (false);
 		base.ship.inArrowActive.SetActive (false);
 	}
 
 	void StartMoveOutShipEffect () {
 		AudioManager.manager.StartPlayShipThruster ();
+		base.ship.outThrustSmoke.SetActive (true);
 		base.ship.outArrowActive.SetActive (true);
 	}
 
 	void StopMoveOutShipEffect () {
 		AudioManager.manager.StopPlayShipThruster ();
+		base.ship.outThrustSmoke.SetActive (false);
 		base.ship.outArrowActive.SetActive (false);
 	}
 

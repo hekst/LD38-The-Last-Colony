@@ -42,6 +42,9 @@ public class Ship : MonoBehaviour {
 	public GameObject outArrowActive;
 	public GameObject dockedActive;
 
+	public GameObject inThrustSmoke;
+	public GameObject outThrustSmoke;
+
 	// Ship Info
 	[HideInInspector] public string shipName;
 	[HideInInspector] private ResourceType resourceType;
