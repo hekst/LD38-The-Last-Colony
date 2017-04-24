@@ -16,6 +16,8 @@ public class UndockedState : IShipState {
 	public override void ExitState ()
 	{
 		base.ship.invisibleGate.SetActive (false);
+		AudioManager.manager.StopPlayShipThruster ();
+
 	}
 	public override void Update ()
 	{
