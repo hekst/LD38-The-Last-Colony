@@ -116,6 +116,9 @@ public class MotherlandResources : MonoBehaviour {
 		}
 		this.population = pop;
 
+		if (this.population <= 0) {
+			GameManager.manager.InitiateGameOverScreen ();
+		}
 
 		// Update UI
 		populationMeter.UpdateValueBarHorizontal (this.population);

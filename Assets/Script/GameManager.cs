@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager manager;
 
+	public SpriteRenderer gameOverScreenDeadPeople;
+
 	public PanelNumberControl dayDisplay;
 	float dayLengthInSec = 10.0f;
 	int daysPassed = 0;
@@ -60,5 +62,18 @@ public class GameManager : MonoBehaviour {
 	public int GetNumDaysPassed () {
 		return daysPassed;
 	}
+
+
+	public void InitiateGameOverScreen () {
+		gameOverScreenDeadPeople.gameObject.SetActive (true);
+		StartCoroutine (WaitSecondsAndLoadMainMenu ());
+	}
+
+	IEnumerator WaitSecondsAndLoadMainMenu () {
+
+		yield return new WaitForSeconds (2f);
+		SharedSceneManager.manager.LoadMainMenu ();
+	}
+
 
 }
