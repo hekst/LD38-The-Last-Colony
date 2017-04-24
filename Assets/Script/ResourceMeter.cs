@@ -14,6 +14,8 @@ public class ResourceMeter : MonoBehaviour {
 	float valueBarMaxHeight;
 	float valueBarMaxWidth;
 
+	bool isWarningOn;
+
 	void Start () {
 		myRect = gameObject.GetComponent <RectTransform> ();
 		GetMeterHeight ();
@@ -40,20 +42,23 @@ public class ResourceMeter : MonoBehaviour {
 		valueBarRect.offsetMax = new Vector2 (-newRight, valueBarRect.offsetMax.y);
 
 
-		if (newPercent < 30) {
+		if (newPercent < 30 && isWarningOn == false) {
 			WarningOn ();
-		} else {
+		} else if (newPercent > 36) {
+			// There is a buffer to prevent flicker while resources are around the boundary.
 			WarningOff ();
 		}
 	}
 
 
 	void WarningOn () {
+		isWarningOn = true;
 		WarningLightOn ();
 		AudioManager.manager.PlayMeterWarningLightOn ();
 	}
 
 	void WarningOff () {
+		isWarningOn = false;
 		WarningLightOff ();
 	}
 
