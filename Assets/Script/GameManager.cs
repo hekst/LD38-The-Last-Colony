@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+	public static GameManager manager;
+
 	public PanelNumberControl dayDisplay;
 	float dayLengthInSec = 10.0f;
 	int daysPassed = 0;
+	int numPeopleDied = 0;
+
 	// Use this for initialization
+
+	void Awake () {
+		if (manager == null) {
+			manager = this;
+		} else {
+			Destroy (gameObject);
+		}
+	}
 
 	void Start () {
 		InitializeDays ();
@@ -22,7 +34,9 @@ public class GameManager : MonoBehaviour {
 	void InitializeDays () {
 		dayLengthInSec = 2.0f;
 		daysPassed = 0;
+		numPeopleDied = 0;
 	}
+
 	void PassADay () {
 		daysPassed++;
 		dayDisplay.SetPanelNumber (daysPassed);
@@ -33,4 +47,11 @@ public class GameManager : MonoBehaviour {
 
 		StartCoroutine (CountDays ());
 	}
+
+
+	public void AddToDeadPeopleCount (int num) {
+		numPeopleDied += num;
+		Debug.Log ("Dead People Count: " + numPeopleDied);
+	}
+
 }

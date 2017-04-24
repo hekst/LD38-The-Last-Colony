@@ -97,7 +97,7 @@ public class Ship : MonoBehaviour {
 		dockedState = new DockedState (this);
 
 		currentState = idleState;
-		Debug.Log ("Ship's initial state: " + currentState.ToString ());
+		//Debug.Log ("Ship's initial state: " + currentState.ToString ());
 
 		currentState.EnterState ();
 	}

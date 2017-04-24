@@ -34,7 +34,7 @@ public class Motherland : MonoBehaviour {
 	void OnCollisionEnter (Collision other) {
 		if (other.transform.CompareTag ("CargoShip")
 			&& other.relativeVelocity.magnitude > maxVelocityTolerated) {
-			Debug.Log ("THE IMPACT FROM SHIP WAS INCREDIBLE!!" + other.relativeVelocity.magnitude);
+			//Debug.Log ("THE IMPACT FROM SHIP WAS INCREDIBLE!!" + other.relativeVelocity.magnitude);
 			DamageRandomResources (other.relativeVelocity.magnitude);
 		}
 	}

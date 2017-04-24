@@ -38,11 +38,11 @@ public class UndockedState : IShipState {
 
 	public override void OnCollisionEnter (Collision other)
 	{
-		Debug.Log ("Ship " + base.ship.shipName + " collided with " + other.transform.name);
+		//Debug.Log ("Ship " + base.ship.shipName + " collided with " + other.transform.name);
 		//CheckMomentum ();
 		if (other.transform.CompareTag ("Motherland") 
 			&& other.relativeVelocity.magnitude > base.ship.maxVelocityTolerated) {
-			Debug.Log ("THE IMPACT WAS INCREDIBLE! " + other.relativeVelocity.magnitude);
+			//Debug.Log ("THE IMPACT WAS INCREDIBLE! " + other.relativeVelocity.magnitude);
 			base.ship.DamageCargo (other.relativeVelocity.magnitude);
 			// If all cargo lost in collision, just undock.
 			if (base.ship.GetShipResourceQuantity () < 1) {

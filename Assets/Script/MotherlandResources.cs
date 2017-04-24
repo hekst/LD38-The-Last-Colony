@@ -61,6 +61,12 @@ public class MotherlandResources : MonoBehaviour {
 			break;
 		case ResourceType.People:
 			success = UpdatePopulation (population + delta);
+
+			// if people successfully died, report to gamemanager
+			if (success && delta < 0) {
+				GameManager.manager.AddToDeadPeopleCount ((int)Mathf.Abs (delta));
+			}
+
 			break;
 		default:
 			Debug.LogError ("MotherlandResources:AddToResources Unknow resource type passed in!! " + resource.ToString ());
