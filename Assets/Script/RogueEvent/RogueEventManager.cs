@@ -25,7 +25,7 @@ public class RogueEventManager : MonoBehaviour {
 	void InitializeRogueEventList () {
 		peopleShipEventList = new List<RogueEventInfo> ();
 
-		peopleShipEventList.Add (new RogueEventInfo (ResourceType.People, -2.0f, "!! INFECTED FOUND !!"));
+		peopleShipEventList.Add (new RogueEventInfo (ResourceType.People, -3.0f, "!! CONFUSED ALIEN RAMPAGING !!"));
 
 	}
 
