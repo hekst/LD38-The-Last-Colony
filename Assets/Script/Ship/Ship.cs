@@ -33,6 +33,8 @@ public class Ship : MonoBehaviour {
 	public GameObject invisibleGate;
 	public DamageReportControl dmgReportText;
 
+	public DamageReportControl stationDmgReportText;
+
 	public int dockingStationId;
 	public Vector3 startPos;
 	public Vector3 exitPos;
@@ -204,6 +206,7 @@ public class Ship : MonoBehaviour {
 			// Unload only when motherland has space.
 			if (motherland.AddResources (resourceType, unloadRate)) {
 				SetShipResourceQuantity (quantity - unloadRate);
+				stationDmgReportText.UpdateDamageReport (resourceType, "+" + unloadRate.ToString ());
 			}
 			StartCoroutine (UnloadEverySecond ());
 		} else if (quantity <= 0) {
