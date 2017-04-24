@@ -19,6 +19,9 @@ public class DockedState : IShipState {
 
 		HaltShipAndTransferMomentum ();
 
+		// Enable Anchor to Probe.
+		base.ship.gameObject.GetComponent <AnchorToObject> ().EnableAnchorWithCurrentPositionOffset ();
+
 		//
 		UIManager.manager.SetupStationStatus (base.ship.dockingStationId, base.ship.dockedAndUnloadingStatusMsg);
 
@@ -31,6 +34,8 @@ public class DockedState : IShipState {
 
 	public override void ExitState ()
 	{
+		base.ship.gameObject.GetComponent <AnchorToObject> ().DisableAnchor ();
+
 		// Logic for stop unloading is in Ship.cs
 		base.ship.dockedActive.SetActive (false);
 		AudioManager.manager.PlayUndockingSound ();
