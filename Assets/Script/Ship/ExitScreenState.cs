@@ -17,6 +17,7 @@ public class ExitScreenState : IShipState {
 		// Player no longer has control of the ship. Pulling down objective text here.
 		// Resetting its momentum
 		ship.shipRigidbody.velocity = Vector3.zero;
+		ship.warningLight.gameObject.SetActive (false);
 
 		UIManager.manager.SetupStationStatus (ship.dockingStationId, ship.undockingAndReturningStatusMsg + ship.shipName);
 	}

@@ -47,6 +47,8 @@ public class Ship : MonoBehaviour {
 	public GameObject inThrustSmoke;
 	public GameObject outThrustSmoke;
 
+	public GameObject warningLight;
+
 	// Ship Info
 	[HideInInspector] public string shipName;
 	[HideInInspector] private ResourceType resourceType;
@@ -260,12 +262,19 @@ public class Ship : MonoBehaviour {
 	}
 
 	IEnumerator RogueEventEverySecond (RogueEventInfo eventInfo) {
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (0.7f);
 		if (docked == true) {
+			//warningLight.gameObject.SetActive ( ! warningLight.gameObject.activeSelf);
+			warningLight.gameObject.SetActive (true);
+
+			warningLight.GetComponent<ParticleSystem> ().Emit (1);
 			UIManager.manager.SetupStationStatus (dockingStationId, eventInfo.rogueEventWarningMsg);
-		}
-		yield return new WaitForSeconds (0.5f);
+		} 
+		yield return new WaitForSeconds (0.7f);
 		if (docked == true) {
+
+			warningLight.gameObject.SetActive (false);
+
 			UIManager.manager.SetupStationStatus (dockingStationId, evacuateStatusMsg);
 
 			motherland.AddResources (eventInfo.targetResource, eventInfo.damagePerSec);

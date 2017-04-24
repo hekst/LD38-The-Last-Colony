@@ -13,7 +13,10 @@ public class IdleState : IShipState {
 		// Expected to be resting off screen.
 		if (ship.IsShipAtExitPos () == false) {
 			ship.transform.position = ship.exitPos;
+
 		}
+		ship.warningLight.gameObject.SetActive (false);
+
 	}
 
 	// Really does nothing.
