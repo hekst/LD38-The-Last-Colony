@@ -253,6 +253,8 @@ public class Ship : MonoBehaviour {
 		RogueEventInfo eventInfo = RogueEventManager.manager.GetRandomRogueEvent (resourceType);
 		if (eventInfo != null) {
 			StartCoroutine (RogueEventEverySecond (eventInfo));
+			AudioManager.manager.StartWarningSiren ();
+
 			return true;
 		} else {
 			// No event to trigger
@@ -269,7 +271,9 @@ public class Ship : MonoBehaviour {
 
 			warningLight.GetComponent<ParticleSystem> ().Emit (1);
 			UIManager.manager.SetupStationStatus (dockingStationId, eventInfo.rogueEventWarningMsg);
-		} 
+		} else {
+			AudioManager.manager.StopWarningSiren ();
+		}
 		yield return new WaitForSeconds (0.7f);
 		if (docked == true) {
 
@@ -281,6 +285,9 @@ public class Ship : MonoBehaviour {
 			stationDmgReportText.UpdateDamageReport (eventInfo.targetResource, eventInfo.damagePerSec.ToString ());
 
 			StartCoroutine (RogueEventEverySecond (eventInfo));
+		} else {
+			// Stop the alarm sound
+			AudioManager.manager.StopWarningSiren ();
 		}
 
 	}

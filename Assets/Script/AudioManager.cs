@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
+	public AudioSource warningSiren;
+
+
 	public static AudioManager manager;
 	// Use this for initialization
 	void Awake () {
@@ -43,4 +46,12 @@ public class AudioManager : MonoBehaviour {
 		Debug.Log ("Insert sound here");
 	}
 
+
+	public void StartWarningSiren () {
+		warningSiren.Play ();
+	}
+
+	public void StopWarningSiren () {
+		warningSiren.Stop ();
+	}
 }
