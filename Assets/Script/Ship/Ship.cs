@@ -261,14 +261,16 @@ public class Ship : MonoBehaviour {
 
 	IEnumerator RogueEventEverySecond (RogueEventInfo eventInfo) {
 		yield return new WaitForSeconds (0.5f);
-		UIManager.manager.SetupStationStatus (dockingStationId, eventInfo.rogueEventWarningMsg);
-		yield return new WaitForSeconds (0.5f);
-		UIManager.manager.SetupStationStatus (dockingStationId, evacuateStatusMsg);
-
-		motherland.AddResources (eventInfo.targetResource, eventInfo.damagePerSec);
-		stationDmgReportText.UpdateDamageReport (eventInfo.targetResource, eventInfo.damagePerSec.ToString ());
-
 		if (docked == true) {
+			UIManager.manager.SetupStationStatus (dockingStationId, eventInfo.rogueEventWarningMsg);
+		}
+		yield return new WaitForSeconds (0.5f);
+		if (docked == true) {
+			UIManager.manager.SetupStationStatus (dockingStationId, evacuateStatusMsg);
+
+			motherland.AddResources (eventInfo.targetResource, eventInfo.damagePerSec);
+			stationDmgReportText.UpdateDamageReport (eventInfo.targetResource, eventInfo.damagePerSec.ToString ());
+
 			StartCoroutine (RogueEventEverySecond (eventInfo));
 		}
 
