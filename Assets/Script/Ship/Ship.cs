@@ -227,6 +227,7 @@ public class Ship : MonoBehaviour {
 			StartCoroutine (UnloadEverySecond ());
 		} else if (quantity <= 0) {
 			Debug.Log (shipName + " finished unloading.");
+			AudioManager.manager.PlayReadyToUndockNoti ();
 			UIManager.manager.SetupStationStatus (dockingStationId, dockedAndFinishedUnloadingStatusMsg);
 		} else {
 			Debug.Log (shipName + " undocked while unloading. Remaining resource amount: " + resourceQuantity);

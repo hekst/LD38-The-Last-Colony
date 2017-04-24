@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour {
 	public AudioSource shipThruster;
 	public AudioSource shipCrash;
 	public AudioSource shipDockedNotification;
+	public AudioSource shipReadyToUndockNotification;
 
 	public static AudioManager manager;
 	// Use this for initialization
@@ -46,6 +47,10 @@ public class AudioManager : MonoBehaviour {
 	public void PlayDockingSound () {
 		shipDockedNotification.Play ();
 
+	}
+
+	public void PlayReadyToUndockNoti () {
+		shipReadyToUndockNotification.Play ();
 	}
 
 	public void PlayUndockingSound () {
