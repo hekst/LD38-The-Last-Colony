@@ -13,6 +13,9 @@ public class AudioManager : MonoBehaviour {
 	public AudioSource shipDockedNotification;
 	public AudioSource shipReadyToUndockNotification;
 
+	public AudioSource [] listBackgroundMusic;
+	AudioSource currentBackgroundMusic;
+
 	public static AudioManager manager;
 	// Use this for initialization
 	void Awake () {
@@ -22,12 +25,29 @@ public class AudioManager : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void Start () {
+
+		StartCoroutine (BackgroundMusicManager ());
 	}
 
+	IEnumerator BackgroundMusicManager () {
+		yield return new WaitForSeconds (5.0f);
+		if (currentBackgroundMusic == null) {
+			currentBackgroundMusic = GetRandomBackgroundMusic ();
+			currentBackgroundMusic.Play ();
+		} else if (currentBackgroundMusic.isPlaying == false) {
+
+			currentBackgroundMusic = GetRandomBackgroundMusic ();
+			currentBackgroundMusic.Play ();
+		}
+
+		StartCoroutine (BackgroundMusicManager ());
+	}
+
+	AudioSource GetRandomBackgroundMusic () {
+		return listBackgroundMusic [Random.Range (0, listBackgroundMusic.Length)];
+	}
 
 	public void PlayMeterWarningLightOn () {
 		meterWarningSound.Play ();
