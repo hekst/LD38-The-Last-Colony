@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour {
 	public AudioSource warningSiren;
 
 	public AudioSource shipThruster;
+	public AudioSource shipCrash;
 
 	public static AudioManager manager;
 	// Use this for initialization
@@ -36,7 +37,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public void PlayShipCollision () {
-		Debug.Log ("Insert sound here");
+		shipCrash.Play ();
 	}
 
 	public void PlayDockingSound () {
