@@ -60,8 +60,7 @@ public class Ship : MonoBehaviour {
 	[HideInInspector] public string dockedAndUnloadingStatusMsg 			= "Docked. Unloading...";
 	[HideInInspector] public string dockedAndFinishedUnloadingStatusMsg 	= "Docked. Finished unloading.";
 	[HideInInspector] public string undockingAndReturningStatusMsg 			= "Undocked. Returning to "; // Expected to be followed by shipName
-	[HideInInspector] public string evacuateStatusMsg_0						= "!! INFECTED FOUND !!";
-	[HideInInspector] public string evacuateStatusMsg_1 					= "!! UNDOCK IMMEDIATELY !!";
+	[HideInInspector] public string evacuateStatusMsg	 					= "!! UNDOCK IMMEDIATELY !!";
 
 	// Use this for initialization
 	void Start () {
@@ -200,8 +199,23 @@ public class Ship : MonoBehaviour {
 	// Unload every second
 	IEnumerator UnloadEverySecond () {
 		yield return new WaitForSeconds (1.0f);
+
 		float quantity = GetShipResourceQuantity ();
 		float unloadRate = GetShipResourceType ().GetUnloadRatePerSec ();
+
+		// Initiate rogue event by chance.
+		if (IsTimeForRogueEvent ()) {
+
+			// Rogue Event
+			if (StartRogueEvent ()) {
+				yield break;
+			} else {
+				Debug.Log ("No event to trigger for resource " + resourceType.ToString ());
+			}
+		}
+
+		// Normal operation
+
 		if ((quantity > 0) && (docked == true)) {
 			// Unload only when motherland has space.
 			if (motherland.AddResources (resourceType, unloadRate)) {
@@ -215,6 +229,50 @@ public class Ship : MonoBehaviour {
 		} else {
 			Debug.Log (shipName + " undocked while unloading. Remaining resource amount: " + resourceQuantity);
 		}
+
+	}
+
+
+	// "UNEXPECTED ITEM IN THE BAGGING AREA"
+
+	/// <summary>
+	/// Starts the rogue event. It means the ship has spoiled resources or unexpected harm 
+	/// such as infected people, confused alien, or a swarm of giant angry ants. These will damage the resources on
+	/// the motherland as long as the ship is docked, regardless of how much resources were on the cargo ship.
+	/// Needless to say, unloading ceases in this state.
+	/// </summary>
+
+	// TODO Lower the chances. Chances are high for development purpose.
+	bool IsTimeForRogueEvent () {
+		return Random.Range (0, 5) == 0;
+	}
+
+	bool StartRogueEvent () {
+		RogueEventInfo eventInfo = RogueEventManager.manager.GetRandomRogueEvent (resourceType);
+		if (eventInfo != null) {
+			StartCoroutine (RogueEventEverySecond (eventInfo));
+			return true;
+		} else {
+			// No event to trigger
+			return false;
+		}
+
+	}
+
+	IEnumerator RogueEventEverySecond (RogueEventInfo eventInfo) {
+		yield return new WaitForSeconds (0.5f);
+		UIManager.manager.SetupStationStatus (dockingStationId, eventInfo.rogueEventWarningMsg);
+		yield return new WaitForSeconds (0.5f);
+		UIManager.manager.SetupStationStatus (dockingStationId, evacuateStatusMsg);
+
+		motherland.AddResources (eventInfo.targetResource, eventInfo.damagePerSec);
+		stationDmgReportText.UpdateDamageReport (eventInfo.targetResource, eventInfo.damagePerSec.ToString ());
+
+		if (docked == true) {
+			StartCoroutine (RogueEventEverySecond (eventInfo));
+		}
+
 	}
 
 }
+
