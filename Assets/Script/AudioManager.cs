@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour {
 
 	public AudioSource warningSiren;
 
+	public AudioSource meterWarningSound;
+
 	public AudioSource shipThruster;
 	public AudioSource shipCrash;
 	public AudioSource shipDockedNotification;
@@ -27,7 +29,7 @@ public class AudioManager : MonoBehaviour {
 
 
 	public void PlayMeterWarningLightOn () {
-		Debug.Log ("Insert sound here.");
+		meterWarningSound.Play ();
 	}
 
 	public void StartPlayShipThruster () {
