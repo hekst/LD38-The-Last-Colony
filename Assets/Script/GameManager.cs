@@ -75,5 +75,9 @@ public class GameManager : MonoBehaviour {
 		SharedSceneManager.manager.LoadMainMenu ();
 	}
 
+	public void ShowHelpScreen () {
+		Debug.LogError ("Need to show help screen");
+	}
+
 
 }
