@@ -63,7 +63,7 @@ public class MotherlandResources : MonoBehaviour {
 			success = UpdatePopulation (population + delta);
 
 			// if people successfully died, report to gamemanager
-			if (success && delta < 0) {
+			if (success && delta < 0 && this.population > 0) {
 				GameManager.manager.AddToDeadPeopleCount ((int)Mathf.Abs (delta));
 			}
 

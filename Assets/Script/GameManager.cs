@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	public static GameManager manager;
 
-	public SpriteRenderer gameOverScreenDeadPeople;
+	public GameObject gameOverScreenDeadPeople;
+	public Text gameOverDaysPassed;
+	public Text gameOverNumDeadPeople;
+
 
 	public PanelNumberControl dayDisplay;
 	float dayLengthInSec = 10.0f;
 	int daysPassed = 0;
 	int numPeopleDied = 0;
+	bool hasGameEnded = false;
 
 	// Use this for initialization
 
@@ -37,6 +42,8 @@ public class GameManager : MonoBehaviour {
 		dayLengthInSec = 2.0f;
 		daysPassed = 0;
 		numPeopleDied = 0;
+		hasGameEnded = false;
+
 	}
 
 	void PassADay () {
@@ -46,8 +53,10 @@ public class GameManager : MonoBehaviour {
 	IEnumerator CountDays () {
 		yield return new WaitForSeconds (dayLengthInSec);
 		PassADay ();
+		if (hasGameEnded == false) {
+			StartCoroutine (CountDays ());
+		}
 
-		StartCoroutine (CountDays ());
 	}
 		
 	public void AddToDeadPeopleCount (int num) {
@@ -65,8 +74,13 @@ public class GameManager : MonoBehaviour {
 
 
 	public void InitiateGameOverScreen () {
-		gameOverScreenDeadPeople.gameObject.SetActive (true);
-		StartCoroutine (WaitSecondsAndLoadMainMenu ());
+		hasGameEnded = true;
+
+		gameOverDaysPassed.text = daysPassed.ToString ();
+		gameOverNumDeadPeople.text = numPeopleDied.ToString ();
+
+		gameOverScreenDeadPeople.SetActive (true);
+		//StartCoroutine (WaitSecondsAndLoadMainMenu ());
 	}
 
 	IEnumerator WaitSecondsAndLoadMainMenu () {
