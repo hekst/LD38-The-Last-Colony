@@ -47,11 +47,18 @@ public class GameManager : MonoBehaviour {
 
 		StartCoroutine (CountDays ());
 	}
-
-
+		
 	public void AddToDeadPeopleCount (int num) {
 		numPeopleDied += num;
 		Debug.Log ("Dead People Count: " + numPeopleDied);
+	}
+
+	public int GetDeadPeopleCount () {
+		return numPeopleDied;
+	}
+
+	public int GetNumDaysPassed () {
+		return daysPassed;
 	}
 
 }

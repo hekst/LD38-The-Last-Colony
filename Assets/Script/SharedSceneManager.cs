@@ -10,6 +10,9 @@ public class SharedSceneManager : MonoBehaviour {
 	/// If information should be passed on to another scene, this will be used to carry it around.
 	/// </summary>
 
+	int prevGameNumberOfDaysPassed = 0;
+	int prevGameNumberOfDeadPeople = 0;
+
 
 	public static SharedSceneManager manager;
 
@@ -33,6 +36,15 @@ public class SharedSceneManager : MonoBehaviour {
 
 
 	public void LoadMainMenu () {
+		if (GameManager.manager == null) {
+			Debug.LogError ("[SharedSceneManager] GameManager is missing !!");
+		} else {
+			prevGameNumberOfDaysPassed = GameManager.manager.GetNumDaysPassed ();
+			prevGameNumberOfDeadPeople = GameManager.manager.GetDeadPeopleCount ();
+			Debug.Log ("Returning to main menu - Days Passed: " + prevGameNumberOfDaysPassed + " DeadPeopleCount: " + prevGameNumberOfDeadPeople );
+		}
+
+
 		SceneManager.LoadScene ("MainMenu");
 	}
 
