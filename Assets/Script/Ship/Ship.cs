@@ -87,7 +87,8 @@ public class Ship : MonoBehaviour {
 
 	public void DamageCargo (float magnitude) {
 		// TODO Adjust the damage.
-		SetShipResourceQuantity (GetShipResourceQuantity () - magnitude);
+		int damageOffset = Random.Range (0, 3);
+		SetShipResourceQuantity (GetShipResourceQuantity () - magnitude - damageOffset);
 	}
 	//////////////////////
 
