@@ -7,6 +7,7 @@ public class RogueEventManager : MonoBehaviour {
 	public static RogueEventManager manager;
 
 	List<RogueEventInfo> peopleShipEventList;
+	List<RogueEventInfo> foodShipEventList;
 
 	void Awake () {
 		if (manager == null) {
@@ -24,9 +25,11 @@ public class RogueEventManager : MonoBehaviour {
 
 	void InitializeRogueEventList () {
 		peopleShipEventList = new List<RogueEventInfo> ();
+		foodShipEventList = new List<RogueEventInfo> ();
 
-		peopleShipEventList.Add (new RogueEventInfo (ResourceType.People, -3.0f, "!! CONFUSED ALIEN RAMPAGING !!"));
+		peopleShipEventList.Add (new RogueEventInfo (ResourceType.People, -3.0f,     "!! CONFUSED ALIEN RAMPAGING !!"));
 
+		foodShipEventList.Add (new RogueEventInfo (ResourceType.FoodAndWater, -5.0f, "!! SPACE ANTS PERISHING FOODS !!"));
 	}
 
 	public RogueEventInfo GetRandomRogueEvent (ResourceType r) {
@@ -35,6 +38,7 @@ public class RogueEventManager : MonoBehaviour {
 
 		switch (r) {
 		case ResourceType.FoodAndWater:
+			eventList = foodShipEventList;
 			break;
 		case ResourceType.Oxygen:
 			break;
