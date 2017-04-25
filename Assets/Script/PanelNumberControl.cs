@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelNumberControl : MonoBehaviour {
 
 	// Assumes 3 digits.
-	public SpriteRenderer [] digits;
-	public Sprite[] panelNumbers;
+	public Image [] digits;
+	public Sprite [] panelNumbers;
 	public Sprite panelNumberOff;
 
 	// Use this for initialization
