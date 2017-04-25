@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviour {
 	}
 	IEnumerator CountDays () {
 		yield return new WaitForSeconds (dayLengthInSec);
-		PassADay ();
 		if (hasGameEnded == false) {
+			PassADay ();
 			StartCoroutine (CountDays ());
 		}
 
