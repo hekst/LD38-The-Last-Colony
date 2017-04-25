@@ -15,7 +15,7 @@ public class Ship : MonoBehaviour {
 
 	[HideInInspector] public Rigidbody shipRigidbody;
 
-	public float maxVelocityTolerated = 2.0f;
+	public float maxVelocityTolerated = 1.0f;
 
 	public KeyCode moveInwardKey = KeyCode.D;
 	public KeyCode moveOutwardKey = KeyCode.A;

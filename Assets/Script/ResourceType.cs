@@ -24,8 +24,8 @@ public static class ResourceTypeMethod {
 
 		depletionRatePerSec = new Dictionary<ResourceType, float> ();
 
-		depletionRatePerSec.Add (ResourceType.FoodAndWater,		-0.5f);
-		depletionRatePerSec.Add (ResourceType.Oxygen,			-0.5f);
+		depletionRatePerSec.Add (ResourceType.FoodAndWater,		-1f);
+		depletionRatePerSec.Add (ResourceType.Oxygen,			-1f);
 		depletionRatePerSec.Add (ResourceType.People,			-0.0f);
 	}
 

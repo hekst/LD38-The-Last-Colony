@@ -22,16 +22,14 @@ public class ObjectiveManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		SetOutOxygenShip ();
+
 		StartCoroutine (TryToDeliverFoodAndWater ());
 		StartCoroutine (TryToDeliverOxygen ());
 		StartCoroutine (TryToDeliverPeople ());
 
 	}
 
-	IEnumerator TestSailOut () {
-		yield return new WaitForSeconds (2.0f);
-		SetOutOxygenShip ();
-	}
 	//////////////////////////
 	// Objective Scheduler ///
 	//////////////////////////
@@ -64,27 +62,27 @@ public class ObjectiveManager : MonoBehaviour {
 	// TODO Maybe move this to ResourceTypeMethod. Probably should.
 	void InitializeDeliveryFrequency () {
 		deliveryFrequencyBase = new Dictionary<ResourceType, float> ();
-		deliveryFrequencyBase.Add (ResourceType.FoodAndWater, 	5.0f);
-		deliveryFrequencyBase.Add (ResourceType.Oxygen, 		5.0f);
-		deliveryFrequencyBase.Add (ResourceType.People, 		5.0f);
+		deliveryFrequencyBase.Add (ResourceType.FoodAndWater, 	10.0f);
+		deliveryFrequencyBase.Add (ResourceType.Oxygen, 		10.0f);
+		deliveryFrequencyBase.Add (ResourceType.People, 		15.0f);
 
 		deliveryFrequencyRange = new Dictionary<ResourceType, float> ();
-		deliveryFrequencyRange.Add (ResourceType.FoodAndWater, 	2.0f);
-		deliveryFrequencyRange.Add (ResourceType.Oxygen, 		2.0f);
-		deliveryFrequencyRange.Add (ResourceType.People, 		2.0f);
+		deliveryFrequencyRange.Add (ResourceType.FoodAndWater, 	6.0f);
+		deliveryFrequencyRange.Add (ResourceType.Oxygen, 		6.0f);
+		deliveryFrequencyRange.Add (ResourceType.People, 		6.0f);
 	}
 
 	// Assign resource quantity
 	float AssignNumFoodAndWater () {
-		return Random.Range (15.0f, 25.0f);
+		return Random.Range (12.0f, 20.0f);
 	}
 
 	float AssignNumOxygen () {
-		return Random.Range (10.0f, 15.0f);
+		return Random.Range (8.0f, 14.0f);
 	}
 
 	float AssignNumPeople () {
-		return Random.Range (30.0f, 50.0f);
+		return Random.Range (10.0f, 50.0f);
 	}
 		
 	float GetDeliveryFrequency (ResourceType r) {
